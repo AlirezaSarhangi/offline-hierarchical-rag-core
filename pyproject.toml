@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "offline-hierarchical-rag-core"
+version = "0.1.0"
+description = "هسته RAG سلسله‌مراتبی آفلاین برای مدیریت دانش سازمانی، مدیریت مسئله و انتقال دانش مدیریتی (مبتنی بر طراحی دامنه‌محور DDD)"
+readme = "docs/Phase1/01_Domain_Discovery_Report.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "Core Architecture & AI Engineering Team"}
+]
+keywords = ["rag", "offline-rag", "hierarchical-rag", "ddd", "knowledge-management", "issue-tracking"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+pythonpath = ["."]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-ra -q"

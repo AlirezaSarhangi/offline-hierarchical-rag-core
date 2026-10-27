@@ -1,0 +1,365 @@
+{
+  "schema_version": "1.0.0",
+  "total_layers": 5,
+  "total_nodes": 12,
+  "layers": [
+    {
+      "layer_index": 0,
+      "name": "لایه صفر: لایه راهبردی",
+      "role_description": "مرجع عالی تصمیم‌گیری یا مالک کلان ساختار سازمانی در سناریوی نمونه",
+      "trackable_info_summary": "دریافت خلاصه راهبردی دانش، مسائل کلیدی حل‌نشده، وضعیت RFP، شکاف‌های پژوهشی و اولویت‌های بین‌گرهی",
+      "default_detail_level": "EXECUTIVE_HIGH",
+      "member_node_ids": [
+        "L0-STRATEGIC-BOARD"
+      ]
+    },
+    {
+      "layer_index": 1,
+      "name": "لایه یک: سازمان‌های مادر",
+      "role_description": "شرکت‌های اصلی، سازمان‌های اصلی، ستادها یا معاونت‌های راهبردی",
+      "trackable_info_summary": "دریافت خلاصه مدیریتی، ریسک‌ها و دستاوردهای زیرمجموعه‌ها",
+      "default_detail_level": "MANAGERIAL",
+      "member_node_ids": [
+        "L1-AI-MOTHER-ORG",
+        "L1-INFRA-MOTHER-ORG",
+        "L1-EXTERNAL-AUDIT-ORG"
+      ]
+    },
+    {
+      "layer_index": 2,
+      "name": "لایه دو: زیرمجموعه‌ها و واحدهای تخصصی",
+      "role_description": "شرکت‌های تابعه، مراکز پژوهشی، واحدهای مهندسی، واحدهای عملیاتی یا دفاتر برنامه",
+      "trackable_info_summary": "نگهداری دانش تفصیلی و آماده‌سازی گزارش‌های کنترل‌شده به لایه بالاتر",
+      "default_detail_level": "TECHNICAL_SUMMARY",
+      "member_node_ids": [
+        "L2-NLP-RESEARCH-CENTER",
+        "L2-DOC-VISION-UNIT",
+        "L2-OFFLINE-SEC-UNIT"
+      ]
+    },
+    {
+      "layer_index": 3,
+      "name": "لایه سه: پروژه‌ها، تیم‌ها و گره‌های اجرایی",
+      "role_description": "تیم‌های پروژه، واحدهای پیاده‌سازی، گروه‌های پژوهشی، تیم‌های میدانی و گروه‌های مجری",
+      "trackable_info_summary": "نگهداری جزئی‌ترین دانش فنی، عملیاتی، نیروی انسانی و مسئله‌محور",
+      "default_detail_level": "TECHNICAL_DETAILED",
+      "member_node_ids": [
+        "L3-RAG-CORE-TEAM",
+        "L3-JUDGE-CALIBRATION-TEAM",
+        "L3-INGESTION-PIPELINE-TEAM"
+      ]
+    },
+    {
+      "layer_index": 4,
+      "name": "لایه چهار: منابع داخلی دانش اختیاری",
+      "role_description": "کتابخانه‌ها، مجموعه اسناد، سوابق پرسنلی، آرشیو پروژه یا مخازن محلی",
+      "trackable_info_summary": "در صورت نیاز مطالعه موردی، به‌عنوان منبع دانش مستقل مدل می‌شوند",
+      "default_detail_level": "TECHNICAL_DETAILED",
+      "member_node_ids": [
+        "L4-ARCH-DOCS-ARCHIVE",
+        "L4-PERSONNEL-PROFILES-REPO"
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "node_id": "L0-STRATEGIC-BOARD",
+      "name": "شورای عالی راهبردی و هیئت‌مدیره هلدینگ فناوری",
+      "layer_index": 0,
+      "domain_of_activity": "سیاست‌گذاری کلان، حکمرانی دانش، تصویب RFPهای راهبردی و تخصیص کلان منابع",
+      "parent_node_id": null,
+      "is_leaf_boundary": false,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "strategic_achievements",
+          "critical_risks",
+          "unresolved_key_issues",
+          "rfp_status",
+          "inter_node_priorities"
+        ],
+        "excluded_topics": [
+          "low_level_code_logs",
+          "raw_chunk_traces"
+        ],
+        "min_judge_score": 18,
+        "max_package_length_words": 1200,
+        "preferred_output_format": "CSV_AND_DB"
+      },
+      "required_transfer_detail_level": "EXECUTIVE_HIGH",
+      "confidentiality_constraints": [
+        "PUBLIC",
+        "INTERNAL",
+        "CONFIDENTIAL",
+        "RESTRICTED"
+      ],
+      "child_node_ids": [
+        "L1-AI-MOTHER-ORG",
+        "L1-INFRA-MOTHER-ORG",
+        "L1-EXTERNAL-AUDIT-ORG"
+      ]
+    },
+    {
+      "node_id": "L1-AI-MOTHER-ORG",
+      "name": "سازمان مادر هوش مصنوعی و سامانه‌های دانش‌بنیان",
+      "layer_index": 1,
+      "domain_of_activity": "مدیریت مراکز پژوهشی هوش مصنوعی، راهبری هسته RAG آفلاین و نظارت بر انتقال دانش",
+      "parent_node_id": "L0-STRATEGIC-BOARD",
+      "is_leaf_boundary": false,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "project_status",
+          "issue_resolution_rate",
+          "research_gaps",
+          "resource_needs"
+        ],
+        "excluded_topics": [
+          "unit_test_stacktraces"
+        ],
+        "min_judge_score": 18,
+        "preferred_output_format": "CSV_AND_DB"
+      },
+      "required_transfer_detail_level": "EXECUTIVE_HIGH",
+      "confidentiality_constraints": [
+        "PUBLIC",
+        "INTERNAL",
+        "CONFIDENTIAL"
+      ],
+      "child_node_ids": [
+        "L2-NLP-RESEARCH-CENTER",
+        "L2-DOC-VISION-UNIT"
+      ]
+    },
+    {
+      "node_id": "L1-INFRA-MOTHER-ORG",
+      "name": "سازمان مادر زیرساخت، امنیت و شبکه ایزوله",
+      "layer_index": 1,
+      "domain_of_activity": "تأمین زیرساخت سخت‌افزاری آفلاین، امنیت شبکه داخلی و پایداری پایگاه‌های داده محلی",
+      "parent_node_id": "L0-STRATEGIC-BOARD",
+      "is_leaf_boundary": false,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "offline_compliance",
+          "hardware_capacity",
+          "security_risks"
+        ],
+        "min_judge_score": 18,
+        "preferred_output_format": "CSV_AND_DB"
+      },
+      "required_transfer_detail_level": "EXECUTIVE_HIGH",
+      "confidentiality_constraints": [
+        "INTERNAL",
+        "CONFIDENTIAL",
+        "RESTRICTED"
+      ],
+      "child_node_ids": [
+        "L2-OFFLINE-SEC-UNIT"
+      ]
+    },
+    {
+      "node_id": "L1-EXTERNAL-AUDIT-ORG",
+      "name": "مؤسسه مستقل ممیزی و استانداردسازی برون‌سازمانی",
+      "layer_index": 1,
+      "domain_of_activity": "ممیزی مستقل کیفیت و استانداردهای امنیتی (زیرساختار داخلی خارج از مرز مدل‌سازی)",
+      "parent_node_id": "L0-STRATEGIC-BOARD",
+      "is_leaf_boundary": true,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "compliance_certificates",
+          "audit_findings"
+        ],
+        "min_judge_score": 18,
+        "boundary_note": "گره نهایی - زیرساختار داخلی مدل نمی‌شود"
+      },
+      "required_transfer_detail_level": "EXECUTIVE_HIGH",
+      "confidentiality_constraints": [
+        "PUBLIC",
+        "INTERNAL"
+      ],
+      "child_node_ids": []
+    },
+    {
+      "node_id": "L2-NLP-RESEARCH-CENTER",
+      "name": "مرکز پژوهشی پردازش زبان طبیعی و مدل‌های زبانی کوچک (SLM)",
+      "layer_index": 2,
+      "domain_of_activity": "پژوهش و توسعه مدل‌های کوچک محلی Embedding و LLM، مهندسی پرامپت و ارزیابی داور",
+      "parent_node_id": "L1-AI-MOTHER-ORG",
+      "is_leaf_boundary": false,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "methodology_summary",
+          "model_evaluation_metrics",
+          "unresolved_technical_issues",
+          "rfp_proposals_summary"
+        ],
+        "min_judge_score": 18,
+        "preferred_output_format": "CSV_AND_DB"
+      },
+      "required_transfer_detail_level": "MANAGERIAL",
+      "confidentiality_constraints": [
+        "INTERNAL",
+        "CONFIDENTIAL"
+      ],
+      "child_node_ids": [
+        "L3-RAG-CORE-TEAM",
+        "L3-JUDGE-CALIBRATION-TEAM"
+      ]
+    },
+    {
+      "node_id": "L2-DOC-VISION-UNIT",
+      "name": "واحد مهندسی پردازش اسناد و مدل‌های بینایی-زبانی (LVM)",
+      "layer_index": 2,
+      "domain_of_activity": "استخراج ساختاریافته DOC، DOCX و PDF و تفسیر چیدمان و جداول اسناد با LVM محلی",
+      "parent_node_id": "L1-AI-MOTHER-ORG",
+      "is_leaf_boundary": false,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "extraction_accuracy",
+          "supported_formats",
+          "layout_challenges"
+        ],
+        "min_judge_score": 18,
+        "preferred_output_format": "CSV_AND_DB"
+      },
+      "required_transfer_detail_level": "MANAGERIAL",
+      "confidentiality_constraints": [
+        "INTERNAL",
+        "CONFIDENTIAL"
+      ],
+      "child_node_ids": [
+        "L3-INGESTION-PIPELINE-TEAM"
+      ]
+    },
+    {
+      "node_id": "L2-OFFLINE-SEC-UNIT",
+      "name": "واحد عملیات ذخیره‌سازی محلی و کنترل قیود آفلاین",
+      "layer_index": 2,
+      "domain_of_activity": "مدیریت پایگاه داده محلی، نمایه برداری آفلاین و کنترل عدم وابستگی به اینترنت",
+      "parent_node_id": "L1-INFRA-MOTHER-ORG",
+      "is_leaf_boundary": true,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "storage_health",
+          "airgap_verification"
+        ],
+        "min_judge_score": 18,
+        "boundary_note": "واحد عملیاتی با مرز نهایی مدل‌سازی در لایه ۲"
+      },
+      "required_transfer_detail_level": "MANAGERIAL",
+      "confidentiality_constraints": [
+        "INTERNAL",
+        "CONFIDENTIAL",
+        "RESTRICTED"
+      ],
+      "child_node_ids": []
+    },
+    {
+      "node_id": "L3-RAG-CORE-TEAM",
+      "name": "تیم اجرایی توسعه هسته RAG سلسله‌مراتبی و مدل دامنه",
+      "layer_index": 3,
+      "domain_of_activity": "پیاده‌سازی معماری DDD، چرخه عمر دانش، تشخیص تکرار/هم‌پوشانی و مدل Issue-Knowledge-Executor",
+      "parent_node_id": "L2-NLP-RESEARCH-CENTER",
+      "is_leaf_boundary": false,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "issue_decomposition",
+          "executor_mapping",
+          "chunking_and_dedup_metrics",
+          "unit_test_coverage"
+        ],
+        "min_judge_score": 18,
+        "preferred_output_format": "CSV_AND_DB"
+      },
+      "required_transfer_detail_level": "TECHNICAL_SUMMARY",
+      "confidentiality_constraints": [
+        "INTERNAL",
+        "CONFIDENTIAL"
+      ],
+      "child_node_ids": [
+        "L4-ARCH-DOCS-ARCHIVE",
+        "L4-PERSONNEL-PROFILES-REPO"
+      ]
+    },
+    {
+      "node_id": "L3-JUDGE-CALIBRATION-TEAM",
+      "name": "گروه اجرایی کالیبراسیون داور LLM و قالب‌های پرامپت",
+      "layer_index": 3,
+      "domain_of_activity": "طراحی Rubric بیست‌نمره‌ای، نسخه‌بندی پرامپت‌ها و ارزیابی وفاداری پاسخ به منبع",
+      "parent_node_id": "L2-NLP-RESEARCH-CENTER",
+      "is_leaf_boundary": true,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "rubric_stability",
+          "prompt_schema_stability"
+        ],
+        "min_judge_score": 18
+      },
+      "required_transfer_detail_level": "TECHNICAL_SUMMARY",
+      "confidentiality_constraints": [
+        "INTERNAL"
+      ],
+      "child_node_ids": []
+    },
+    {
+      "node_id": "L3-INGESTION-PIPELINE-TEAM",
+      "name": "تیم پیاده‌سازی مبدل‌های اسناد (DOC/DOCX/PDF) و مفسر کمکی LVM",
+      "layer_index": 3,
+      "domain_of_activity": "پیاده‌سازی Adapterهای استخراج متن، حفظ ارجاع صفحه/بخش و علامت‌گذاری اسناد بصری",
+      "parent_node_id": "L2-DOC-VISION-UNIT",
+      "is_leaf_boundary": true,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "doc_docx_pdf_pipeline",
+          "lvm_adapter_status"
+        ],
+        "min_judge_score": 18
+      },
+      "required_transfer_detail_level": "TECHNICAL_SUMMARY",
+      "confidentiality_constraints": [
+        "INTERNAL"
+      ],
+      "child_node_ids": []
+    },
+    {
+      "node_id": "L4-ARCH-DOCS-ARCHIVE",
+      "name": "مخزن محلی اسناد معماری، مقالات علمی و مستندات کتابخانه‌های نرم‌افزاری",
+      "layer_index": 4,
+      "domain_of_activity": "نگهداری اسناد مرجع PDF/DOCX، استانداردهای طراحی دامنه‌محور و راهنماهای فنی آفلاین",
+      "parent_node_id": "L3-RAG-CORE-TEAM",
+      "is_leaf_boundary": true,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "indexed_documents_count",
+          "version_history"
+        ],
+        "min_judge_score": 18
+      },
+      "required_transfer_detail_level": "TECHNICAL_DETAILED",
+      "confidentiality_constraints": [
+        "PUBLIC",
+        "INTERNAL"
+      ],
+      "child_node_ids": []
+    },
+    {
+      "node_id": "L4-PERSONNEL-PROFILES-REPO",
+      "name": "آرشیو سوابق پرسنلی، پروفایل تخصص مجریان و گزارش‌های تکمیل پروژه",
+      "layer_index": 4,
+      "domain_of_activity": "نگهداری پروفایل‌های نیروی انسانی، برچسب‌های تخصص فنی و سوابق حل مسائل قبلی",
+      "parent_node_id": "L3-RAG-CORE-TEAM",
+      "is_leaf_boundary": true,
+      "reporting_rules": {
+        "mandatory_topics": [
+          "executor_profiles",
+          "historical_issue_resolutions"
+        ],
+        "min_judge_score": 18
+      },
+      "required_transfer_detail_level": "TECHNICAL_DETAILED",
+      "confidentiality_constraints": [
+        "INTERNAL",
+        "CONFIDENTIAL"
+      ],
+      "child_node_ids": []
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "metadata_record_18_fields": {
+    "domain": "مدیریت دانش و هوش مصنوعی آفلاین",
+    "sub_domain": "بازیابی سلسله‌مراتبی و استخراج اسناد",
+    "organization_or_node": "L3-RAG-CORE-TEAM",
+    "project": "هسته RAG سلسله‌مراتبی آفلاین - فاز ۱",
+    "author_or_owner": "دکتر سارا احمدی (معمار ارشد دامنه)",
+    "document_type": "PDF",
+    "confidentiality_level": "INTERNAL",
+    "initial_version_id": "VER-001",
+    "active_version_id": "VER-001",
+    "related_issue_id": "ISS-101",
+    "related_executor_id": "EXEC-201",
+    "related_rfp_id": "RFP-301",
+    "status": "ACTIVE",
+    "priority": "HIGH",
+    "tags": [
+      "DDD",
+      "Offline-RAG",
+      "Hierarchical-Transfer",
+      "LLM-Judge"
+    ],
+    "source_reliability": 0.96,
+    "target_transfer_layer": 2,
+    "suggested_detail_level": "TECHNICAL_SUMMARY"
+  },
+  "knowledge_item": {
+    "item_id": "KI-001",
+    "title": "مستند معماری مرجع خط لوله RAG آفلاین و قواعد خردسازی",
+    "owner_node_id": "L3-RAG-CORE-TEAM",
+    "active_version_tag": "v1.0.0",
+    "chunks": [
+      {
+        "chunk_id": "CHK-001-01",
+        "source_document_id": "KI-001",
+        "version_tag": "v1.0.0",
+        "sequence_order": 1,
+        "page_or_section_ref": "صفحه ۱۴ - بخش ۷.۳ و ۷.۴",
+        "heading_path": [
+          "۷. مدل دانش",
+          "۷.۴ خردسازی دانش"
+        ],
+        "text_content": "هسته RAG آفلاین اسناد محلی با قالب‌های DOC، DOCX و PDF را پردازش کرده و بدون وابستگی به سرویس‌های ابری، قطعات دانش را همراه با شناسه سند منبع، نسخه و شماره صفحه بازیابی می‌کند."
+      }
+    ]
+  },
+  "issue_knowledge_executor_triangle": {
+    "issue": {
+      "issue_id": "ISS-101",
+      "title": "بهینه‌سازی دقت استخراج جداول پیچیده فارسی در اسناد PDF اسکن‌شده آفلاین",
+      "status": "IN_PROGRESS",
+      "progress_percentage": 75.0,
+      "has_research_gap": true,
+      "research_gap_reason": "کمبود شواهد تجربی درباره دقت مدل‌های LVM زیر ۴ میلیارد پارامتر روی جداول مالی و مهندسی فارسی.",
+      "sub_issues": [
+        {
+          "sub_issue_id": "SUB-101-1",
+          "title": "طراحی Adapter تشخیص صفحات چیدمان‌محور و جدول‌دار",
+          "relative_order": 1,
+          "status": "RESOLVED",
+          "progress_percentage": 100.0
+        },
+        {
+          "sub_issue_id": "SUB-101-2",
+          "title": "ارزیابی مصرف حافظه و زمان پاسخ مدل LVM کوچک روی سخت‌افزار محلی",
+          "relative_order": 2,
+          "status": "IN_PROGRESS",
+          "progress_percentage": 50.0
+        }
+      ]
+    },
+    "executor": {
+      "executor_id": "EXEC-201",
+      "name": "مهندس علی کاظمی",
+      "node_id": "L3-RAG-CORE-TEAM",
+      "organizational_role": "مهندس ارشد بازیابی اطلاعات و مدل‌های زبانی آفلاین",
+      "expertise_domains": [
+        "پردازش زبان طبیعی فارسی",
+        "مدل‌های Embedding محلی",
+        "طراحی دامنه‌محور DDD"
+      ],
+      "active_issue_ids": [
+        "ISS-101"
+      ]
+    },
+    "supporting_knowledge_ids": [
+      "KI-001"
+    ]
+  },
+  "transfer_package_and_judge": {
+    "package_id": "TPKG-401",
+    "source_node_id": "L3-RAG-CORE-TEAM",
+    "target_layer_index": 2,
+    "detail_level": "TECHNICAL_SUMMARY",
+    "detail_level_label_fa": "خلاصه فنی",
+    "is_accepted_for_delivery": true,
+    "judge_score": {
+      "score_id": "JDG-501",
+      "total_score": 20,
+      "threshold": 18,
+      "is_approved": true,
+      "rubric_breakdown": {
+        "source_fidelity": 5,
+        "completeness": 4,
+        "detail_level_fit": 3,
+        "uncertainty_and_gap_handling": 3,
+        "clarity_and_structure": 2,
+        "source_attribution": 2,
+        "no_unsupported_claims": 1,
+        "total_score": 20
+      },
+      "explanation": "بسته انتقال کاملاً منطبق بر اسناد منبع گره L3-RAG-CORE-TEAM بوده و شکاف پژوهشی LVM را به‌درستی اعلام کرده است."
+    }
+  },
+  "rfp_proposal_feedback_cycle": {
+    "rfp_id": "RFP-301",
+    "rfp_title": "توسعه و کالیبراسیون ماژول استخراج جدول‌های پیچیده فارسی با مدل کمکی LVM آفلاین",
+    "has_all_mandatory_sections": true,
+    "proposal_id": "PROP-601",
+    "proposal_status": "APPROVED",
+    "evaluated_score": 18.5,
+    "feedback_report_id": "FDB-701",
+    "recommendation_decision": "SELECT"
+  }
+}
