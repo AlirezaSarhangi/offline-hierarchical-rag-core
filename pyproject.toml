@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "offline-hierarchical-rag-core"
 version = "0.1.0"
 description = "هسته RAG سلسله‌مراتبی آفلاین برای مدیریت دانش سازمانی، مدیریت مسئله و انتقال دانش مدیریتی (مبتنی بر طراحی دامنه‌محور DDD)"
-readme = "docs/Phase1/01_Domain_Discovery_Report.md"
+readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
