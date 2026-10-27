@@ -1,0 +1,922 @@
+{
+  "phase": "Phase 2 - Offline Models & Technical Baseline",
+  "model_registry_summary": {
+    "total_registered_models": 6,
+    "categories": {
+      "EMBEDDING": [
+        "bge-m3",
+        "paraphrase-multilingual-MiniLM-L12-v2"
+      ],
+      "LLM": [
+        "qwen2.5:3b-instruct-q4_K_M",
+        "llama3.2:3b-instruct-q4_K_M"
+      ],
+      "LVM": [
+        "qwen2.5-vl:3b",
+        "moondream2"
+      ]
+    },
+    "primary_models_by_task": {
+      "SEMANTIC_INDEXING": "bge-m3",
+      "QA_ANSWERING": "qwen2.5:3b-instruct-q4_K_M",
+      "TECHNICAL_SUMMARIZATION": "qwen2.5:3b-instruct-q4_K_M",
+      "EXECUTIVE_MANAGERIAL_SUMMARIZATION": "qwen2.5:3b-instruct-q4_K_M",
+      "ISSUE_DECOMPOSITION": "qwen2.5:3b-instruct-q4_K_M",
+      "EXECUTOR_EXPERTISE_ANALYSIS": "qwen2.5:3b-instruct-q4_K_M",
+      "RFP_AND_FEEDBACK_GENERATION": "qwen2.5:3b-instruct-q4_K_M",
+      "LLM_AS_JUDGE_EVALUATION": "qwen2.5:3b-instruct-q4_K_M",
+      "DOCUMENT_LAYOUT_ANALYSIS": "qwen2.5-vl:3b"
+    },
+    "models": [
+      {
+        "model_id": "bge-m3",
+        "model_name": "BAAI/bge-m3 (Multilingual Dense & Sparse Embedding)",
+        "category": "EMBEDDING",
+        "quantization_format": "GGUF_F16",
+        "context_window_size": 8192,
+        "supported_tasks": [
+          "SEMANTIC_INDEXING"
+        ],
+        "default_inference_params": {
+          "temperature": 0.0,
+          "top_p": 1.0,
+          "max_tokens": 512,
+          "embedding_dim": 1024
+        },
+        "known_limitations": [
+          "مصرف حافظه بالاتر نسبت به MiniLM در اسناد بسیار طولانی",
+          "نیاز به نرمال‌سازی بردار خروجی برای شباهت کسینوسی دقیق در متون ترکیبی فارسی-انگلیسی"
+        ],
+        "evaluation_notes": "مدل منتخب اصلی (Primary) برای نمایه‌سازی معنایی فارسی و تشخیص تکرار/هم‌پوشانی قطعات دانش با دقت بالا.",
+        "is_primary_for_category": true
+      },
+      {
+        "model_id": "paraphrase-multilingual-MiniLM-L12-v2",
+        "model_name": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+        "category": "EMBEDDING",
+        "quantization_format": "ONNX_INT8",
+        "context_window_size": 512,
+        "supported_tasks": [
+          "SEMANTIC_INDEXING"
+        ],
+        "default_inference_params": {
+          "temperature": 0.0,
+          "top_p": 1.0,
+          "max_tokens": 384,
+          "embedding_dim": 384
+        },
+        "known_limitations": [
+          "محدودیت پنجره زمینه به ۵۱۲ توکن که نیازمند خردسازی ریزدانه‌تر اسناد است",
+          "کاهش دقت بازیابی در اصطلاحات تخصصی نادر نسبت به bge-m3"
+        ],
+        "evaluation_notes": "مدل سبک و سریع جایگزین (Fallback) برای محیط‌های سخت‌افزاری بسیار محدود و اجرای فقط روی CPU.",
+        "is_primary_for_category": false
+      },
+      {
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "model_name": "Qwen 2.5 3B Instruct (4-bit Quantized)",
+        "category": "LLM",
+        "quantization_format": "GGUF_Q4_K_M",
+        "context_window_size": 32768,
+        "supported_tasks": [
+          "QA_ANSWERING",
+          "TECHNICAL_SUMMARIZATION",
+          "EXECUTIVE_MANAGERIAL_SUMMARIZATION",
+          "ISSUE_DECOMPOSITION",
+          "EXECUTOR_EXPERTISE_ANALYSIS",
+          "RFP_AND_FEEDBACK_GENERATION",
+          "LLM_AS_JUDGE_EVALUATION"
+        ],
+        "default_inference_params": {
+          "temperature": 0.1,
+          "top_p": 0.9,
+          "max_tokens": 1536
+        },
+        "known_limitations": [
+          "احتمال خطای قالب‌بندی JSON در صورتی که پرامپت فاقد Schema صریح و مثال ساخت‌یافته باشد",
+          "حساسیت به زمینه بسیار طولانی بالای ۸ هزار توکن در نسخه ۳ میلیارد پارامتری کوانتیزه"
+        ],
+        "evaluation_notes": "مدل منتخب اصلی LLM به دلیل پشتیبانی قوی از زبان فارسی، رعایت ساختار JSON و دقت بالا در داوری ۲۰ نمره‌ای.",
+        "is_primary_for_category": true
+      },
+      {
+        "model_id": "llama3.2:3b-instruct-q4_K_M",
+        "model_name": "Meta Llama 3.2 3B Instruct (4-bit Quantized)",
+        "category": "LLM",
+        "quantization_format": "GGUF_Q4_K_M",
+        "context_window_size": 16384,
+        "supported_tasks": [
+          "QA_ANSWERING",
+          "TECHNICAL_SUMMARIZATION",
+          "EXECUTIVE_MANAGERIAL_SUMMARIZATION",
+          "ISSUE_DECOMPOSITION",
+          "EXECUTOR_EXPERTISE_ANALYSIS",
+          "RFP_AND_FEEDBACK_GENERATION"
+        ],
+        "default_inference_params": {
+          "temperature": 0.15,
+          "top_p": 0.9,
+          "max_tokens": 1024
+        },
+        "known_limitations": [
+          "تسلط واژگانی کمتر در متون اداری و رسمی فارسی نسبت به Qwen2.5-3B",
+          "عدم توصیه به عنوان داور اصلی (LLM-as-a-Judge) به دلیل نوسان جزئی در امتیازدهی معیارهای فارسی"
+        ],
+        "evaluation_notes": "مدل نامزد دوم برای خلاصه‌سازی فنی، تجزیه مسئله و مقایسه عملکرد با Qwen2.5 در فازهای ۲ و ۱۴.",
+        "is_primary_for_category": false
+      },
+      {
+        "model_id": "qwen2.5-vl:3b",
+        "model_name": "Qwen 2.5 VL 3B (Vision-Language Model)",
+        "category": "LVM",
+        "quantization_format": "GGUF_Q4_K_M",
+        "context_window_size": 8192,
+        "supported_tasks": [
+          "DOCUMENT_LAYOUT_ANALYSIS"
+        ],
+        "default_inference_params": {
+          "temperature": 0.05,
+          "top_p": 0.85,
+          "max_tokens": 1024
+        },
+        "known_limitations": [
+          "زمان استنتاج بالاتر روی صفحات اسکن‌شده با وضوح بیش از 300 DPI در حالت بدون GPU",
+          "نیاز به ارسال تک‌صفحه‌ای برای جلوگیری از سرریز حافظه در جداول بسیار متراکم"
+        ],
+        "evaluation_notes": "مدل منتخب اصلی LVM برای تفسیر جداول پیچیده فارسی، نمودارها و چیدمان اسناد PDF/DOC در خط لوله ورود دانش.",
+        "is_primary_for_category": true
+      },
+      {
+        "model_id": "moondream2",
+        "model_name": "Moondream2 1.8B Vision-Language Model",
+        "category": "LVM",
+        "quantization_format": "GGUF_Q4_K_M",
+        "context_window_size": 2048,
+        "supported_tasks": [
+          "DOCUMENT_LAYOUT_ANALYSIS"
+        ],
+        "default_inference_params": {
+          "temperature": 0.1,
+          "top_p": 0.9,
+          "max_tokens": 512
+        },
+        "known_limitations": [
+          "دقت پایین‌تر در خوانش متون ریز فارسی داخل جداول اسکن‌شده (OCR فارسی محدود)",
+          "مناسب صرفاً برای تشخیص ساختار کلی چیدمان صفحه و توصیف تصاویر/نمودارها"
+        ],
+        "evaluation_notes": "مدل فوق‌سبک بینایی-زبانی برای تشخیص اولیه صفحات نیازمند پردازش بصری در سخت‌افزارهای ضعیف.",
+        "is_primary_for_category": false
+      }
+    ]
+  },
+  "embedding_baseline_test": {
+    "model_id": "bge-m3",
+    "vector_dimensions": 16,
+    "sample_vector_preview": [
+      -0.349511,
+      -0.262607,
+      -0.351323,
+      -0.353239,
+      -0.084956,
+      -0.324815
+    ],
+    "identical_normalized_text_similarity": 1.0,
+    "different_text_similarity": 0.219131
+  },
+  "lvm_layout_analysis_test": {
+    "model_id": "qwen2.5-vl:3b",
+    "page_reference": "KI-001::Page-14",
+    "layout_type": "COMPLEX_TABLE_AND_TEXT",
+    "has_complex_table": true,
+    "extracted_markdown_table": "| شاخص | مقدار هدف | وضعیت |\n| --- | --- | --- |\n| امتیاز داور | >= 18/20 | تایید شده [KI-001] |",
+    "visual_confidence": 0.94,
+    "notes": "تفسیر بصری چیدمان برای 'جدول قواعد خردسازی اسناد و نگهداری فراداده ۱۸ فیلد' با موفقیت انجام شد."
+  },
+  "prompt_testing_summary": {
+    "total_prompt_categories_tested": 12,
+    "all_schemas_valid": true,
+    "all_judge_thresholds_met": true,
+    "experiments": [
+      {
+        "experiment_index": 1,
+        "task_category": "QA_GROUNDED",
+        "task_category_label_fa": "پرسش و پاسخ مبتنی بر منبع",
+        "template_id": "PRM-01-QA-GROUNDED",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 987,
+        "expected_json_keys": [
+          "answer",
+          "citations",
+          "uncertainty_status",
+          "related_issues",
+          "suggested_executors"
+        ],
+        "parsed_output_keys": [
+          "answer",
+          "citations",
+          "uncertainty_status",
+          "related_issues",
+          "suggested_executors"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-01",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "answer": "بر اساس مستندات گره [KI-001]، هسته RAG آفلاین اسناد DOC، DOCX و PDF را به صورت محلی پردازش کرده و هر قطعه دانش شناسه سند منبع، نسخه و شماره صفحه را حفظ می‌کند.",
+          "citations": [
+            "[KI-001]",
+            "[VER-001]"
+          ],
+          "uncertainty_status": "SUFFICIENT_EVIDENCE",
+          "related_issues": [
+            "ISS-101"
+          ],
+          "suggested_executors": [
+            "EXEC-201"
+          ]
+        }
+      },
+      {
+        "experiment_index": 2,
+        "task_category": "TECHNICAL_SUMMARIZATION",
+        "task_category_label_fa": "خلاصه‌سازی فنی",
+        "template_id": "PRM-02-TECH-SUMMARY",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 996,
+        "expected_json_keys": [
+          "technical_summary",
+          "methods_and_evidence",
+          "technical_limitations",
+          "citations",
+          "uncertainty_status"
+        ],
+        "parsed_output_keys": [
+          "technical_summary",
+          "methods_and_evidence",
+          "technical_limitations",
+          "citations",
+          "uncertainty_status"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-02",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "technical_summary": "خط لوله ورود اسناد با استفاده از خردسازی آگاه از ساختار و مدل‌های کوچک آفلاین (bge-m3 و Qwen2.5-3B) اجرا شده و ارجاعات منبع [KI-001] در سطح هر قطعه حفظ می‌گردد.",
+          "methods_and_evidence": [
+            "خردسازی با حفظ مسیر عنوان و شماره صفحه [KI-001]",
+            "تفسیر جداول پیچیده با مفسر کمکی LVM محلی [KI-002]"
+          ],
+          "technical_limitations": [
+            "محدودیت مصرف حافظه روی اسناد اسکن‌شده با وضوح بالا در حالت CPU"
+          ],
+          "citations": [
+            "[KI-001]",
+            "[KI-002]"
+          ],
+          "uncertainty_status": "SUFFICIENT_EVIDENCE"
+        }
+      },
+      {
+        "experiment_index": 3,
+        "task_category": "EXECUTIVE_MANAGERIAL_SUMMARIZATION",
+        "task_category_label_fa": "خلاصه‌سازی مدیریتی و اجرایی",
+        "template_id": "PRM-03-EXEC-MANAGERIAL-SUMMARY",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 1053,
+        "expected_json_keys": [
+          "executive_summary",
+          "key_achievements",
+          "critical_risks",
+          "decisions_required",
+          "citations",
+          "uncertainty_status"
+        ],
+        "parsed_output_keys": [
+          "executive_summary",
+          "key_achievements",
+          "critical_risks",
+          "decisions_required",
+          "citations",
+          "uncertainty_status"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-03",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "executive_summary": "فاز کشف دامنه و خط پایه مدل‌های آفلاین تکمیل شده و هسته RAG آماده انتقال بسته‌های دانشی تاییدشده با امتیاز بالای ۱۸ از ۲۰ به لایه راهبردی است [KI-002].",
+          "key_achievements": [
+            "استقرار کامل رجیستری ۵ لایه‌ای و کنترل مرز گره‌ها [KI-001]",
+            "تدوین RFP-301 جهت رفع شکاف پژوهشی استخراج جداول تصویری [KI-002]"
+          ],
+          "critical_risks": [
+            "نیاز به بهینه‌سازی سرعت مدل بینایی-زبانی LVM روی سرورهای محلی بدون GPU"
+          ],
+          "decisions_required": [
+            "تصویب تخصیص منابع سخت‌افزاری محلی برای اجرای مدل کوانتیزه Qwen2.5-VL"
+          ],
+          "citations": [
+            "[KI-001]",
+            "[KI-002]"
+          ],
+          "uncertainty_status": "SUFFICIENT_EVIDENCE"
+        }
+      },
+      {
+        "experiment_index": 4,
+        "task_category": "ISSUE_DECOMPOSITION",
+        "task_category_label_fa": "تجزیه مسئله",
+        "template_id": "PRM-04-ISSUE-DECOMPOSITION",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 1055,
+        "expected_json_keys": [
+          "parent_issue_title",
+          "suggested_priority",
+          "sub_issues",
+          "citations",
+          "uncertainty_status"
+        ],
+        "parsed_output_keys": [
+          "parent_issue_title",
+          "suggested_priority",
+          "sub_issues",
+          "citations",
+          "uncertainty_status"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-04",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "parent_issue_title": "بهینه‌سازی دقت استخراج جداول پیچیده فارسی در اسناد PDF آفلاین",
+          "suggested_priority": "HIGH",
+          "sub_issues": [
+            {
+              "relative_order": 1,
+              "title": "طراحی تشخیص‌دهنده صفحات جدول‌دار و چیدمان‌محور [KI-001]",
+              "status": "RESOLVED"
+            },
+            {
+              "relative_order": 2,
+              "title": "کالیبراسیون مدل LVM کوانتیزه برای استخراج ساختار جدول فارسی [KI-002]",
+              "status": "IN_PROGRESS"
+            }
+          ],
+          "citations": [
+            "[KI-001]",
+            "[KI-002]"
+          ],
+          "uncertainty_status": "SUFFICIENT_EVIDENCE"
+        }
+      },
+      {
+        "experiment_index": 5,
+        "task_category": "SUB_ISSUE_COMPARISON",
+        "task_category_label_fa": "مقایسه زیرمسئله‌ها",
+        "template_id": "PRM-05-SUB-ISSUE-COMPARISON",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 875,
+        "expected_json_keys": [
+          "overlapping_pairs",
+          "dependency_order",
+          "merge_recommendations",
+          "citations"
+        ],
+        "parsed_output_keys": [
+          "overlapping_pairs",
+          "dependency_order",
+          "merge_recommendations",
+          "citations"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-05",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "overlapping_pairs": [
+            {
+              "sub_issue_a": "SUB-101-1",
+              "sub_issue_b": "SUB-101-2",
+              "similarity_score": 0.42,
+              "relation": "SEQUENTIAL_DEPENDENCY"
+            }
+          ],
+          "dependency_order": [
+            "SUB-101-1",
+            "SUB-101-2"
+          ],
+          "merge_recommendations": [
+            "زیرمسئله‌ها مستقل بوده و نیازی به ادغام ندارند؛ SUB-101-1 پیش‌نیاز SUB-101-2 است [KI-002]."
+          ],
+          "citations": [
+            "[KI-002]"
+          ]
+        }
+      },
+      {
+        "experiment_index": 6,
+        "task_category": "EXECUTOR_EXPERTISE_ANALYSIS",
+        "task_category_label_fa": "تحلیل تخصص مجریان",
+        "template_id": "PRM-06-EXECUTOR-ANALYSIS",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 895,
+        "expected_json_keys": [
+          "recommended_executors",
+          "matching_rationale",
+          "expertise_gaps",
+          "citations"
+        ],
+        "parsed_output_keys": [
+          "recommended_executors",
+          "matching_rationale",
+          "expertise_gaps",
+          "citations"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-06",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "recommended_executors": [
+            {
+              "executor_id": "EXEC-201",
+              "name": "مهندس علی کاظمی",
+              "match_score": 0.95
+            }
+          ],
+          "matching_rationale": "تطابق مستقیم تخصص پردازش زبان طبیعی فارسی و طراحی دامنه‌محور و نویسندگی سند مرجع [KI-001].",
+          "expertise_gaps": [
+            "نیاز به همکار مکمل در حوزه بهینه‌سازی کرنل‌های بینایی ماشین (LVM)"
+          ],
+          "citations": [
+            "[KI-001]",
+            "[EXEC-201]"
+          ]
+        }
+      },
+      {
+        "experiment_index": 7,
+        "task_category": "RESEARCH_GAP_IDENTIFICATION",
+        "task_category_label_fa": "شناسایی شکاف پژوهشی",
+        "template_id": "PRM-07-RESEARCH-GAP",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 910,
+        "expected_json_keys": [
+          "has_research_gap",
+          "identified_gaps",
+          "gap_severity",
+          "requires_rfp",
+          "citations",
+          "uncertainty_status"
+        ],
+        "parsed_output_keys": [
+          "has_research_gap",
+          "identified_gaps",
+          "gap_severity",
+          "requires_rfp",
+          "citations",
+          "uncertainty_status"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-07",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "has_research_gap": true,
+          "identified_gaps": [
+            "کمبود شواهد تجربی درباره دقت مدل‌های LVM زیر ۴ میلیارد پارامتر روی جداول مالی و مهندسی فارسی [KI-002]."
+          ],
+          "gap_severity": "HIGH",
+          "requires_rfp": true,
+          "citations": [
+            "[KI-002]"
+          ],
+          "uncertainty_status": "INSUFFICIENT_KNOWLEDGE"
+        }
+      },
+      {
+        "experiment_index": 8,
+        "task_category": "KNOWLEDGE_TRANSFER_PREPARATION",
+        "task_category_label_fa": "آماده‌سازی انتقال دانش",
+        "template_id": "PRM-08-TRANSFER-PREPARATION",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 1168,
+        "expected_json_keys": [
+          "transfer_package_summary",
+          "ai_improvement_suggestions",
+          "highlighted_risks_and_gaps",
+          "decisions_for_upper_layer",
+          "citations",
+          "uncertainty_status"
+        ],
+        "parsed_output_keys": [
+          "transfer_package_summary",
+          "ai_improvement_suggestions",
+          "highlighted_risks_and_gaps",
+          "decisions_for_upper_layer",
+          "citations",
+          "uncertainty_status"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-08",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "transfer_package_summary": "بسته انتقال گره L3-RAG-CORE-TEAM برای لایه ۲ با سطح جزئیات خلاصه فنی (TECHNICAL_SUMMARY) آماده شد [KI-001].",
+          "ai_improvement_suggestions": [
+            "حذف لاگ‌های سطح قطعه و برجسته‌سازی شکاف پژوهشی LVM و وضعیت RFP-301 برای مدیران لایه بالاتر."
+          ],
+          "highlighted_risks_and_gaps": [
+            "شکاف پژوهشی دقت جدول‌خوانی فارسی در اسناد اسکن‌شده قدیمی [KI-002]"
+          ],
+          "decisions_for_upper_layer": [
+            "تأیید پیشنهاد فنی PROP-601 برای پیاده‌سازی خط لوله دو مرحله‌ای PDF"
+          ],
+          "citations": [
+            "[KI-001]",
+            "[KI-002]"
+          ],
+          "uncertainty_status": "SUFFICIENT_EVIDENCE"
+        }
+      },
+      {
+        "experiment_index": 9,
+        "task_category": "RFP_GENERATION",
+        "task_category_label_fa": "تولید RFP",
+        "template_id": "PRM-09-RFP-GENERATION",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 976,
+        "expected_json_keys": [
+          "rfp_title",
+          "problem_statement",
+          "technical_requirements",
+          "expected_deliverables",
+          "evaluation_criteria",
+          "constraints",
+          "required_expertise",
+          "citations"
+        ],
+        "parsed_output_keys": [
+          "rfp_title",
+          "problem_statement",
+          "technical_requirements",
+          "expected_deliverables",
+          "evaluation_criteria",
+          "constraints",
+          "required_expertise",
+          "citations"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-09",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "rfp_title": "توسعه ماژول استخراج جداول پیچیده فارسی با مفسر کمکی LVM آفلاین",
+          "problem_statement": "ارتقای دقت استخراج جداول تودرتو در گزارش‌های PDF اسکن‌شده بدون اتصال به اینترنت [KI-002].",
+          "technical_requirements": [
+            "اجرای ۱۰۰٪ آفلاین روی سخت‌افزار محلی",
+            "حفظ شناسه سند منبع، نسخه و شماره صفحه در قطعات خروجی [KI-001]"
+          ],
+          "expected_deliverables": [
+            "آداپتور استخراج دو مرحله‌ای PDF/LVM",
+            "مجموعه آزمون واحد قطعی"
+          ],
+          "evaluation_criteria": [
+            "دقت استخراج ساختار جدول بالای ۹۰٪",
+            "کسب حداقل امتیاز ۱۸ از ۲۰ از داور LLM"
+          ],
+          "constraints": [
+            "حداکثر مصرف حافظه ۸ گیگابایت"
+          ],
+          "required_expertise": [
+            "بینایی ماشین",
+            "معماری دامنه‌محور پایتون"
+          ],
+          "citations": [
+            "[KI-001]",
+            "[KI-002]"
+          ]
+        }
+      },
+      {
+        "experiment_index": 10,
+        "task_category": "PROPOSAL_EVALUATION",
+        "task_category_label_fa": "ارزیابی پیشنهاد",
+        "template_id": "PRM-10-PROPOSAL-EVALUATION",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 891,
+        "expected_json_keys": [
+          "evaluated_score",
+          "criterion_scores",
+          "technical_completeness_assessment",
+          "feasibility_assessment",
+          "risk_assessment",
+          "citations"
+        ],
+        "parsed_output_keys": [
+          "evaluated_score",
+          "criterion_scores",
+          "technical_completeness_assessment",
+          "feasibility_assessment",
+          "risk_assessment",
+          "citations"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-10",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "evaluated_score": 18.5,
+          "criterion_scores": {
+            "rfp_alignment": 5.0,
+            "technical_completeness": 4.5,
+            "methodology_and_feasibility": 5.0,
+            "risk_management": 4.0
+          },
+          "technical_completeness_assessment": "تمامی الزامات اجرای آفلاین و حفظ فراداده پوشش داده شده‌اند [KI-001].",
+          "feasibility_assessment": "رویکرد دو مرحله‌ای در محیط محلی کاملاً عملیاتی و قابل آزمون واحد است.",
+          "risk_assessment": "ریسک زمان پردازش با مکانیزم Fallback کنترل شده است.",
+          "citations": [
+            "[RFP-301]",
+            "[PROP-601]"
+          ]
+        }
+      },
+      {
+        "experiment_index": 11,
+        "task_category": "FEEDBACK_GENERATION",
+        "task_category_label_fa": "تولید بازخورد",
+        "template_id": "PRM-11-FEEDBACK-GENERATION",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 979,
+        "expected_json_keys": [
+          "strengths",
+          "weaknesses",
+          "missing_requirements",
+          "technical_risks",
+          "clarifications_needed",
+          "suggested_score",
+          "recommendation_decision",
+          "criterion_references"
+        ],
+        "parsed_output_keys": [
+          "strengths",
+          "weaknesses",
+          "missing_requirements",
+          "technical_risks",
+          "clarifications_needed",
+          "suggested_score",
+          "recommendation_decision",
+          "criterion_references"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-11",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "strengths": [
+            "رعایت کامل قید آفلاین و معماری Ports & Adapters [RFP-301]"
+          ],
+          "weaknesses": [
+            "حد آستانه تشخیص پیچیدگی چیدمان صفحه نیاز به کالیبراسیون عددی دارد"
+          ],
+          "missing_requirements": [],
+          "technical_risks": [
+            "افزایش زمان پردازش چرخه‌ای در اسناد بالای ۲۰۰ صفحه اسکن‌شده"
+          ],
+          "clarifications_needed": [
+            "تعیین سقف زمان مجاز (Timeout) برای پردازش هر صفحه تصویری"
+          ],
+          "suggested_score": 18.5,
+          "recommendation_decision": "SELECT",
+          "criterion_references": [
+            "نیازمندی فنی ۱: اجرای آفلاین [RFP-301]",
+            "معیار ارزیابی ۲: حفظ ارجاع صفحه [KI-001]"
+          ]
+        }
+      },
+      {
+        "experiment_index": 12,
+        "task_category": "LLM_AS_JUDGE_SCORING",
+        "task_category_label_fa": "امتیازدهی LLM به‌عنوان داور",
+        "template_id": "PRM-12-LLM-AS-JUDGE",
+        "version_tag": "v1.0.0",
+        "model_id": "qwen2.5:3b-instruct-q4_K_M",
+        "assembled_prompt_length": 1320,
+        "expected_json_keys": [
+          "source_fidelity",
+          "completeness",
+          "detail_level_fit",
+          "uncertainty_and_gap_handling",
+          "clarity_and_structure",
+          "source_attribution",
+          "no_unsupported_claims",
+          "total_score",
+          "is_approved",
+          "explanation",
+          "improvement_suggestions"
+        ],
+        "parsed_output_keys": [
+          "source_fidelity",
+          "completeness",
+          "detail_level_fit",
+          "uncertainty_and_gap_handling",
+          "clarity_and_structure",
+          "source_attribution",
+          "no_unsupported_claims",
+          "total_score",
+          "is_approved",
+          "explanation",
+          "improvement_suggestions"
+        ],
+        "schema_validation_passed": true,
+        "judge_evaluation": {
+          "score_id": "EXP-JDG-12",
+          "total_score": 20,
+          "required_threshold": 18,
+          "is_approved": true,
+          "rubric_breakdown": {
+            "source_fidelity": 5,
+            "completeness": 4,
+            "detail_level_fit": 3,
+            "uncertainty_and_gap_handling": 3,
+            "clarity_and_structure": 2,
+            "source_attribution": 2,
+            "no_unsupported_claims": 1,
+            "total_score": 20
+          }
+        },
+        "sample_parsed_output": {
+          "source_fidelity": 5,
+          "completeness": 4,
+          "detail_level_fit": 3,
+          "uncertainty_and_gap_handling": 3,
+          "clarity_and_structure": 2,
+          "source_attribution": 2,
+          "no_unsupported_claims": 1,
+          "total_score": 20,
+          "is_approved": true,
+          "explanation": "خروجی کاملاً منطبق با دانش منبع [KI-001]، دارای ساختار حرفه‌ای و بالاتر از حد آستانه ۱۸ از ۲۰ است.",
+          "improvement_suggestions": []
+        }
+      }
+    ]
+  },
+  "adapter_call_count": 28
+}

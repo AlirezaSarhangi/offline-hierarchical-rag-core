@@ -23,14 +23,31 @@ from src.domain.entities import (
 from src.domain.exceptions import (
     DomainError,
     DomainValidationError,
+    IncompatibleModelTaskError,
     InvalidLayerHierarchyError,
     JudgeThresholdNotMetError,
     LeafNodeBoundaryViolationError,
+    OfflineAdapterError,
+    PromptAssemblyError,
+    PromptOutputValidationError,
     RegistryNotFoundError,
 )
 from src.domain.layer_node_registry import (
     DEFAULT_LAYER_DEFINITIONS,
     LayerNodeRegistry,
+)
+from src.domain.model_registry import (
+    DEFAULT_OFFLINE_MODELS,
+    ModelCategory,
+    ModelRegistry,
+    ModelTaskType,
+    OfflineModelSpecification,
+)
+from src.domain.prompt_registry import (
+    DEFAULT_PROMPT_TEMPLATES,
+    PromptRegistry,
+    PromptTaskCategory,
+    PromptTemplate,
 )
 from src.domain.value_objects import (
     ALLOWED_CONFIDENTIALITY_LEVELS,
@@ -57,6 +74,10 @@ __all__ = [
     "LeafNodeBoundaryViolationError",
     "RegistryNotFoundError",
     "JudgeThresholdNotMetError",
+    "IncompatibleModelTaskError",
+    "PromptAssemblyError",
+    "PromptOutputValidationError",
+    "OfflineAdapterError",
     # Value Objects & Constants
     "ALLOWED_CONFIDENTIALITY_LEVELS",
     "ALLOWED_DOCUMENT_TYPES",
@@ -86,7 +107,16 @@ __all__ = [
     "RFP",
     "Proposal",
     "FeedbackReport",
-    # Registry
+    # Registries (Phase 1 & Phase 2)
     "DEFAULT_LAYER_DEFINITIONS",
     "LayerNodeRegistry",
+    "ModelCategory",
+    "ModelTaskType",
+    "OfflineModelSpecification",
+    "DEFAULT_OFFLINE_MODELS",
+    "ModelRegistry",
+    "PromptTaskCategory",
+    "PromptTemplate",
+    "DEFAULT_PROMPT_TEMPLATES",
+    "PromptRegistry",
 ]

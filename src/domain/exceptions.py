@@ -94,6 +94,50 @@ class JudgeThresholdNotMetError(DomainError):
         self.required_threshold: int = required_threshold
 
 
+class IncompatibleModelTaskError(DomainValidationError):
+    """خطای عدم تطابق قابلیت‌های مدل آفلاین با نوع وظیفه درخواستی."""
+
+    def __init__(self, model_id: str, task_name: str) -> None:
+        message = (
+            f"مدل آفلاین '{model_id}' مجاز یا سازگار برای اجرای وظیفه '{task_name}' نیست."
+        )
+        super().__init__(message, field_name="supported_tasks")
+        self.code = "INCOMPATIBLE_MODEL_TASK_ERROR"
+        self.model_id: str = model_id
+        self.task_name: str = task_name
+
+
+class PromptAssemblyError(DomainValidationError):
+    """خطای کمبود متغیرهای الزامی یا نقص در مونتاژ قالب پرامپت."""
+
+    def __init__(self, template_id: str, missing_vars: tuple[str, ...]) -> None:
+        message = (
+            f"مونتاژ قالب پرامپت '{template_id}' ناموفق بود. متغیرهای ورودی مفقود: {missing_vars}"
+        )
+        super().__init__(message, field_name="required_variables")
+        self.code = "PROMPT_ASSEMBLY_ERROR"
+        self.template_id: str = template_id
+        self.missing_vars: tuple[str, ...] = missing_vars
+
+
+class PromptOutputValidationError(DomainValidationError):
+    """خطای عدم انطباق خروجی مدل با ساختار JSON یا کلیدهای الزامی قالب پرامپت (پایداری Schema)."""
+
+    def __init__(self, template_id: str, reason: str) -> None:
+        message = f"خروجی تولیدشده برای قالب پرامپت '{template_id}' نامعتبر است: {reason}"
+        super().__init__(message, field_name="expected_json_keys")
+        self.code = "PROMPT_OUTPUT_VALIDATION_ERROR"
+        self.template_id: str = template_id
+        self.reason: str = reason
+
+
+class OfflineAdapterError(DomainError):
+    """خطای ارتباط یا اجرای مدل در آداپتور محلی آفلاین."""
+
+    def __init__(self, message: str) -> None:
+        super().__init__(message, code="OFFLINE_ADAPTER_ERROR")
+
+
 __all__ = [
     "DomainError",
     "DomainValidationError",
@@ -101,4 +145,8 @@ __all__ = [
     "LeafNodeBoundaryViolationError",
     "RegistryNotFoundError",
     "JudgeThresholdNotMetError",
+    "IncompatibleModelTaskError",
+    "PromptAssemblyError",
+    "PromptOutputValidationError",
+    "OfflineAdapterError",
 ]
